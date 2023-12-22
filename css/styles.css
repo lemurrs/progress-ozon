@@ -1,0 +1,134 @@
+.progress {
+  margin: 3vh;
+  height: 94vh;
+  font-size: 44px;
+  font-family: "Arial", sans-serif;
+}
+.progress__text {
+  font-weight: bold;
+  height: 5%;
+}
+.progress__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 95%;
+}
+.progress__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+.progress__buttons label {
+  display: flex;
+  gap: 40px;
+  position: relative;
+  align-items: center;
+  font-size: 39px;
+  font-weight: 600;
+}
+
+input[type=number]::-webkit-inner-spin-button {
+  display: none;
+  -moz-appearance: textfield;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.loadingContainer {
+  display: flex;
+  width: 420px;
+  padding: 50px 0;
+  border-radius: 8px;
+  flex-direction: column;
+  align-items: center;
+}
+.loadingContainer__circle {
+  position: relative;
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  background: conic-gradient(#005cff 0deg, #dae6ec 0deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadingContainer__circle::before {
+  content: "";
+  position: absolute;
+  height: 250px;
+  width: 250px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.progress-value {
+  border: 1px solid black;
+  text-align: center;
+  width: 100px;
+  height: 60px;
+  border-radius: 28px;
+}
+
+@keyframes loadingCircleSpin1 {
+  0% {
+    transform: rotateZ(0);
+  }
+  100% {
+    transform: rotateZ(360deg);
+  }
+}
+.Animated {
+  animation: 2s ease infinite loadingCircleSpin1;
+}
+
+.switch {
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  cursor: pointer;
+}
+.switch input {
+  display: none;
+}
+.switch input:checked ~ i {
+  background: #005cff;
+}
+.switch input:checked ~ i:after {
+  top: 5%;
+  bottom: 5%;
+  left: 45%;
+}
+.switch i {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100px;
+  height: 60px;
+  border-radius: 28px;
+  background: #dae6ec;
+  transition: all 0.2s ease-in-out;
+}
+.switch i:after {
+  content: "";
+  position: absolute;
+  left: 3%;
+  bottom: 5%;
+  top: 5%;
+  width: 52%;
+  background-color: #fff;
+  border-radius: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+@media (orientation: landscape) {
+  .progress__wrapper {
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+/*# sourceMappingURL=styles.css.map */

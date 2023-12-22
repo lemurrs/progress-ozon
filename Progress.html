@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Progress</title>
+    <link rel="stylesheet" href="css/Reset.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body>
+
+<div class="progress">
+    <p class="progress__text">Progress</p>
+    <div class="progress__wrapper">
+        <div class="loadingContainer">
+            <div id="Circle" class="loadingContainer__circle"></div>
+        </div>
+
+        <div class="progress__buttons">
+            <label>
+                <input id="InputValue" class="progress-value" type="number" inputmode="numeric" /> <span>Value</span>
+            </label>
+
+            <label class="switch">
+                <input id="InputAnimate" type="checkbox"><i></i> <span>Animate</span>
+            </label>
+
+            <label class="switch">
+                <input id="InputHide" type="checkbox"><i></i> <span>Hide</span>
+            </label>
+        </div>
+    </div>
+</div>
+
+<script src="js/Progress.js"></script>
+
+</body>
+</html>
