@@ -1,43 +1,93 @@
+// Создаем объект, представляющий интерфейс для управления элементами на странице
+const PageController = {
 
-const inputHide = document.querySelector('#InputHide')
-const inputValue=document.querySelector('#InputValue')
-const inputAnimate = document.querySelector('#InputAnimate')
+    // Скрывает/показывает блок
+    toggleBlock: function (containerQuerySelector) {
+        const loadingContainer = document.querySelector(containerQuerySelector);
+        loadingContainer.classList.toggle('hidden');
+    },
 
-inputHide.addEventListener('click', makeBlockHidden)
-inputAnimate.addEventListener('click',makeBlockAnimated)
-inputValue.addEventListener('input',LoadingCircleUpdate)
+    // Включает/выключает анимацию круга
+    toggleAnimation: function (animatedElement, toggleAnimationElement) {
+        const Circle = document.querySelector(animatedElement)
+        const inputAnimate = document.querySelector(toggleAnimationElement)
+        if (Circle.classList.contains('Animated')) {
+            this.disableAnimation(Circle, inputAnimate);
+        } else {
+            this.enableAnimation(Circle);
+        }
+    },
 
-// Скрывает/показывает блок
-function makeBlockHidden(){
-    const loadingContainer = document.querySelector('.loadingContainer')
-    loadingContainer.classList.toggle('hidden')
-}
-// Включает/выключает анимацию круга
-function makeBlockAnimated() {
-    const Circle = document.querySelector('#Circle')
-    //При удалении класса, отвечающего за анимацию, она доигрывается до конца.
-    if (Circle.classList.contains('Animated')) {
-        const onAnimationIteration = () => {
-            Circle.classList.remove('Animated');
-            Circle.removeEventListener('animationiteration', onAnimationIteration);
-        };
+    // Обновляет отображение круга в зависимости от введенного значения
+    prevInputValue: null,
+    updateCircle: function (progressElement, inputValueElement) {
 
-        Circle.addEventListener('animationiteration', onAnimationIteration);
-    } else {
+        const Circle = document.querySelector(progressElement);
+        const inputValue = document.querySelector(inputValueElement);
+        this.validateInput(inputValue);
+
+        //Анимирование заполнения
+        if (this.prevInputValue !== inputValue.value) {
+            this.prevInputValue = inputValue.value
+
+            const startAngle = 0;
+            const endAngle = inputValue.value * 3.6; // Максимальный угол градиента
+
+            const animationDuration = 1000; // Продолжительность анимации в миллисекундах
+            const frameRate = 60; // Количество кадров в секунду
+
+            const totalFrames = (animationDuration / 1000) * frameRate;
+            const angleIncrement = (endAngle - startAngle) / totalFrames;
+
+            let currentAngle = startAngle;
+            let frameCount = 0;
+
+            function updateGradient() {
+                Circle.style.background = `conic-gradient(#005cff ${currentAngle}deg, #dae6ec 0deg)`;
+
+                currentAngle += angleIncrement;
+                frameCount++;
+
+                if (frameCount < totalFrames) {
+                    requestAnimationFrame(updateGradient);
+                } else {
+                    Circle.style.background = `conic-gradient(#005cff ${endAngle}deg, #dae6ec 0deg)`;
+                }
+            }
+
+            updateGradient()
+
+        }
+
+    },
+
+    // Проверяет и корректирует введенное значение
+    validateInput: function (input) {
+        if (input.value > 100) input.value = 100;
+        if (input.value <= 0) input.value = 0;
+        if (input.value.length > 3) input.slice(0, 3);
+        input.value = input.value.replace(/^0+|[^0-9]/g, '');
+    },
+
+    // Вспомогательная функция для обработки завершения анимации
+    onAnimationIteration: function (Circle) {
+        Circle.classList.remove('Animated');
+        document.querySelector('#InputAnimate').removeAttribute('disabled');
+    },
+
+    // Включает кнопку анимации и добавляет обработчик события
+    enableAnimation: function (Circle) {
         Circle.classList.add('Animated');
+    },
+
+    // Отключает кнопку анимации и добавляет обработчик события
+    disableAnimation: function (Circle, inputAnimate) {
+        inputAnimate.setAttribute('disabled', 'disabled');
+        Circle.addEventListener('animationiteration', () => this.onAnimationIteration(Circle), {once: true});
     }
-}
+};
 
-
-// Обновляет отображение круга в зависимости от введенного значения
-function LoadingCircleUpdate(){
-    ValidateInput()
-    const Circle = document.querySelector('#Circle')
-    Circle.style.background=`conic-gradient(#005cff ${inputValue.value*3.6}deg , #dae6ec 0deg)`
-}
-// Проверяет и корректирует введенное значение
-function ValidateInput(){
-    if(inputValue.value>100) inputValue.value=100;
-    if(inputValue.value<=0) inputValue.value=0
-    inputValue.value = inputValue.value.replace(/\D/g, '')
-}
+// Назначаем обработчики событий
+document.querySelector('#InputHide').addEventListener('click', () => PageController.toggleBlock('.loadingContainer'));
+document.querySelector('#InputAnimate').addEventListener('click', () => PageController.toggleAnimation('#Circle', '#InputAnimate'));
+document.querySelector('#InputValue').addEventListener('input', () => PageController.updateCircle('#Circle', '#InputValue'));

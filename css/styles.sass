@@ -1,5 +1,5 @@
-$OzonBlue-color:#005CFFFF
-$OzonWhite-color:#DAE6ECFF
+$OzonBlue-color: #005CFFFF
+$OzonWhite-color: #DAE6ECFF
 @mixin InputToggle
   width: 100px
   height: 60px
@@ -10,19 +10,23 @@ $OzonWhite-color:#DAE6ECFF
   height: 94vh
   font-size: 44px
   font-family: 'Arial', sans-serif
+
   &__text
     font-weight: bold
     height: 5%
+
   &__wrapper
     display: flex
     flex-direction: column
     align-items: center
     justify-content: space-evenly
     height: 95%
+
   &__buttons
     display: flex
     flex-direction: column
     gap: 30px
+
     & label
       display: flex
       gap: 40px
@@ -46,15 +50,17 @@ input[type='number']::-webkit-inner-spin-button
   border-radius: 8px
   flex-direction: column
   align-items: center
+
   &__circle
     position: relative
     height: 300px
     width: 300px
     border-radius: 50%
-    background: conic-gradient($OzonBlue-color 0deg,$OzonWhite-color 0deg)
+    background: conic-gradient($OzonBlue-color 0deg, $OzonWhite-color 0deg)
     display: flex
     align-items: center
     justify-content: center
+
     &::before
       content: ''
       position: absolute
@@ -62,7 +68,6 @@ input[type='number']::-webkit-inner-spin-button
       width: 250px
       background-color: #fff
       border-radius: 50%
-
 
 
 .progress-value
@@ -86,21 +91,26 @@ input[type='number']::-webkit-inner-spin-button
   -moz-user-select: none
   -webkit-user-select: none
   cursor: pointer
+
   & input
     display: none
+
     &:checked ~ i
       background: $OzonBlue-color
+
       &:after
         top: 5%
         bottom: 5%
         left: 45%
+
   & i
     position: relative
     top: 0
     left: 0
     @include InputToggle
     background: $OzonWhite-color
-    transition: all 0.2s  ease-in-out
+    transition: all 0.2s ease-in-out
+
     &:after
       content: ""
       position: absolute
@@ -110,7 +120,7 @@ input[type='number']::-webkit-inner-spin-button
       width: 52%
       background-color: #fff
       border-radius: 100%
-      transition: all 0.2s  ease-in-out
+      transition: all 0.2s ease-in-out
 
 @media (orientation: landscape)
   .progress__wrapper
