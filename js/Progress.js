@@ -61,7 +61,7 @@ const PageController = {
 
     },
 
-    // Проверяет и корректирует введенное значение
+    // Проверяет и корректирует введенное значение прогресса
     validateInput: function (input) {
         if (input.value > 100) input.value = 100;
         if (input.value <= 0) input.value = 0;
@@ -69,25 +69,25 @@ const PageController = {
         input.value = input.value.replace(/^0+|[^0-9]/g, '');
     },
 
-    // Вспомогательная функция для обработки завершения анимации
+    // Выключает анимацию, включает кнопку
     onAnimationIteration: function (Circle) {
         Circle.classList.remove('Animated');
         document.querySelector('#InputAnimate').removeAttribute('disabled');
     },
 
-    // Включает кнопку анимации и добавляет обработчик события
+    // Вкл/выкл анимации
     enableAnimation: function (Circle) {
         Circle.classList.add('Animated');
     },
 
-    // Отключает кнопку анимации и добавляет обработчик события
+    // Отключает кнопку(animated) и добавляет единоразовое событие на итерацию анимации.
     disableAnimation: function (Circle, inputAnimate) {
         inputAnimate.setAttribute('disabled', 'disabled');
         Circle.addEventListener('animationiteration', () => this.onAnimationIteration(Circle), {once: true});
     }
 };
 
-// Назначаем обработчики событий
+// Назначаем обработчики событий на кнопки
 document.querySelector('#InputHide').addEventListener('click', () => PageController.toggleBlock('.loadingContainer'));
 document.querySelector('#InputAnimate').addEventListener('click', () => PageController.toggleAnimation('#Circle', '#InputAnimate'));
 document.querySelector('#InputValue').addEventListener('input', () => PageController.updateCircle('#Circle', '#InputValue'));
